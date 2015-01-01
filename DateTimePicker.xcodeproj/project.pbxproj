@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9FA85CA31A55743500DB115F /* DateTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA85CA21A55743500DB115F /* DateTimePickerView.m */; };
 		9FAC7D291A23082400CDE6ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FAC7D281A23082400CDE6ED /* UIKit.framework */; };
 		9FAC7D2B1A23082400CDE6ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FAC7D2A1A23082400CDE6ED /* Foundation.framework */; };
 		9FAC7D2D1A23082400CDE6ED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FAC7D2C1A23082400CDE6ED /* CoreGraphics.framework */; };
@@ -15,10 +16,11 @@
 		9FAC7D391A23082400CDE6ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAC7D381A23082400CDE6ED /* AppDelegate.m */; };
 		9FAC7D3C1A23082400CDE6ED /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAC7D3B1A23082400CDE6ED /* ViewController.m */; };
 		9FAC7D3F1A23082400CDE6ED /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FAC7D3D1A23082400CDE6ED /* ViewController.xib */; };
-		9FAC7D471A23085700CDE6ED /* DateTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAC7D461A23085700CDE6ED /* DateTimePickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9FA85CA11A55743500DB115F /* DateTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimePickerView.h; sourceTree = "<group>"; };
+		9FA85CA21A55743500DB115F /* DateTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimePickerView.m; sourceTree = "<group>"; };
 		9FAC7D241A23082400CDE6ED /* DateTimePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateTimePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FAC7D281A23082400CDE6ED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9FAC7D2A1A23082400CDE6ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,8 +34,6 @@
 		9FAC7D3A1A23082400CDE6ED /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9FAC7D3B1A23082400CDE6ED /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9FAC7D3E1A23082400CDE6ED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		9FAC7D451A23085700CDE6ED /* DateTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimePickerView.h; sourceTree = "<group>"; };
-		9FAC7D461A23085700CDE6ED /* DateTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimePickerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +53,8 @@
 		9FAC7D191A23082400CDE6ED = {
 			isa = PBXGroup;
 			children = (
+				9FA85CA11A55743500DB115F /* DateTimePickerView.h */,
+				9FA85CA21A55743500DB115F /* DateTimePickerView.m */,
 				9FAC7D2E1A23082400CDE6ED /* DateTimePicker */,
 				9FAC7D271A23082400CDE6ED /* Frameworks */,
 				9FAC7D251A23082400CDE6ED /* Products */,
@@ -80,8 +82,6 @@
 		9FAC7D2E1A23082400CDE6ED /* DateTimePicker */ = {
 			isa = PBXGroup;
 			children = (
-				9FAC7D451A23085700CDE6ED /* DateTimePickerView.h */,
-				9FAC7D461A23085700CDE6ED /* DateTimePickerView.m */,
 				9FAC7D371A23082400CDE6ED /* AppDelegate.h */,
 				9FAC7D381A23082400CDE6ED /* AppDelegate.m */,
 				9FAC7D3A1A23082400CDE6ED /* ViewController.h */,
@@ -169,7 +169,7 @@
 				9FAC7D351A23082400CDE6ED /* main.m in Sources */,
 				9FAC7D391A23082400CDE6ED /* AppDelegate.m in Sources */,
 				9FAC7D3C1A23082400CDE6ED /* ViewController.m in Sources */,
-				9FAC7D471A23085700CDE6ED /* DateTimePickerView.m in Sources */,
+				9FA85CA31A55743500DB115F /* DateTimePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +283,7 @@
 				9FAC7D441A23082400CDE6ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

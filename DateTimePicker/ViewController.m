@@ -59,7 +59,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+
     self.timeDetailTextField = [[[UITextField alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/4, 10, [UIScreen mainScreen].bounds.size.width/2, 30)] autorelease];
     self.timeDetailTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.timeDetailTextField.placeholder = @"具体时间";
@@ -67,7 +67,7 @@
     self.timeDetailTextField.tag = 1;
     [self.view addSubview:self.timeDetailTextField];
     
-    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithSize:CGSizeMake(320, 280) timeType:timeDetail title:@"具体时间"] autorelease];
+    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail] autorelease];
     selectDatePicker1.delegate = self;
     self.datePicker1 = selectDatePicker1;
     
@@ -78,7 +78,7 @@
     self.timeChineseTextField.tag = 2;
     [self.view addSubview:self.timeChineseTextField];
     
-    DateTimePickerView *selectDatePicker2 = [[[DateTimePickerView alloc] initWithSize:CGSizeMake(320, 280) timeType:timeChinese title:@"今天，明天，后天"] autorelease];
+    DateTimePickerView *selectDatePicker2 = [[[DateTimePickerView alloc] initWithTitle:@"今天，明天，后天" timeType:timeChinese] autorelease];
     selectDatePicker2.delegate = self;
     self.datePicker2 = selectDatePicker2;
 
@@ -89,10 +89,9 @@
     self.dateDetailTextField.tag = 3;
     [self.view addSubview:self.dateDetailTextField];
     
-    DateTimePickerView *selectDatePicker3 = [[[DateTimePickerView alloc] initWithSize:CGSizeMake(320, 280) timeType:dateDetail title:@"日期选择"] autorelease];
+    DateTimePickerView *selectDatePicker3 = [[[DateTimePickerView alloc] initWithTitle:@"日期选择" timeType:dateDetail] autorelease];
     selectDatePicker3.delegate = self;
     self.datePicker3 = selectDatePicker3;
-    
     
     self.selectDate = [NSDate date];
 }
@@ -151,7 +150,7 @@
         }
         self.timeType = timeDetail;
         [self.datePicker1 viewLoad:self.selectDate];
-        [self.datePicker1 showInView:self.view];
+        [self.datePicker1 showInView];
     }else if(textField.tag == 2){
         if (![textField.text isEqualToString:@""] && textField.text != nil) {
             [formater setDateFormat:@"MM-dd HH:mm"];
@@ -162,7 +161,7 @@
         }
         self.timeType = timeChinese;
         [self.datePicker2 viewLoad:self.selectDate];
-        [self.datePicker2 showInView:self.view];
+        [self.datePicker2 showInView];
     }else if(textField.tag == 3){
         if (![textField.text isEqualToString:@""] && textField.text != nil) {
             [formater setDateFormat:@"yyyy-MM-dd"];
@@ -173,7 +172,7 @@
         }
         self.timeType = dateDetail;
         [self.datePicker3 viewLoad:self.selectDate];
-        [self.datePicker3 showInView:self.view];
+        [self.datePicker3 showInView];
 
     }
     return NO;

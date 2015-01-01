@@ -9,6 +9,8 @@
 #import "DateTimePickerView.h"
 
 @implementation DateTimePickerView
+@synthesize window;
+@synthesize shadowView = _shadowView;
 @synthesize pickView = _pickView;
 @synthesize toolBar = _toolBar;
 @synthesize pickViewList = _pickViewList;
@@ -28,6 +30,8 @@
 
 -(void)dealloc
 {
+    [window release];
+    self.shadowView = nil;
     self.pickView = nil;
     self.toolBar = nil;
     self.pickViewList = nil;
@@ -40,16 +44,24 @@
 	[super dealloc];
 }
 
--(id)initWithSize:(CGSize)size timeType:(TimeType)timeType title:(NSString*)title{
+-(id)initWithTitle:(NSString*)title timeType:(TimeType)tType{
     self = [super init];
     if (self)
 	{
-        self.backgroundColor = [UIColor grayColor];
-        self.timeType = timeType;
-        self.pickView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width,size.height)] autorelease];
+        id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
+        if ([appDelegate respondsToSelector:@selector(window)]){
+            window = [appDelegate performSelector:@selector(window)];
+        }else{
+            window = [[UIApplication sharedApplication] keyWindow];
+        }
+
+        self.shadowView = [[[UIView alloc] init] autorelease];
+        
+        self.timeType = tType;
+        self.pickView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,216+44)] autorelease];
 		self.pickView.backgroundColor = [UIColor underPageBackgroundColor];
         
-		self.toolBar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, size.width, 44)] autorelease];
+		self.toolBar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)] autorelease];
 		self.toolBar.barStyle = UIBarStyleDefault;
 		
 		UIBarButtonItem *titleButton = [[[UIBarButtonItem alloc] initWithTitle:title style: UIBarButtonItemStylePlain target: nil action: nil] autorelease];
@@ -60,14 +72,16 @@
 		[self.toolBar setItems: array];
 		[self.pickView addSubview:self.toolBar];
         
-        UIPickerView *pickList = [[[UIPickerView alloc] initWithFrame:CGRectMake(0, 44,size.width,size.height-44)] autorelease];
-        pickList.showsSelectionIndicator = YES;//在当前选择上显示一个透明窗口
+        UIPickerView *pickList = [[[UIPickerView alloc] initWithFrame:CGRectMake(0, self.toolBar.frame.size.height,[UIScreen mainScreen].applicationFrame.size.width,216)] autorelease];
+        pickList.showsSelectionIndicator = YES;
         pickList.delegate = self;
         pickList.dataSource = self;
         self.pickViewList = pickList;
         [self.pickView addSubview:pickList];
-        [self setFrame:self.pickView.frame];
+        
         [self addSubview:self.pickView];
+        
+        [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-self.pickView.frame.size.height, [UIScreen mainScreen].bounds.size.width, self.pickView.frame.size.height)];
     }
     return self;
 }
@@ -485,30 +499,17 @@
 }
 
 // UIPicker显示
-- (void)showInView:(UIView *)view
+- (void)showInView
 {
-    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^(void){
-        // 添加阴影
-        UIView *shadowView = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-        shadowView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        shadowView.userInteractionEnabled = NO;
-        shadowView.tag = 1024;
-        [view addSubview:shadowView];
-        [view bringSubviewToFront:shadowView];
-        // 添加UIPickerView
-        [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-self.pickView.frame.size.height, [UIScreen mainScreen].bounds.size.width, self.pickView.frame.size.height)];
-        [view addSubview:self];
-        [view bringSubviewToFront:self];
-        // navigationItem 禁用
-        UIViewController *viewController = [self viewController];
-        viewController.navigationItem.leftBarButtonItem.enabled = NO;
-        viewController.navigationItem.rightBarButtonItem.enabled = NO;
-        // 除了UIPickerView外 禁用
-        for (UIView *subView in [view subviews]) {
-            if (![self isEqual:subView]) {
-                subView.userInteractionEnabled = NO;
-            }
-        }
+    [self.shadowView setFrame:window.frame];
+    [window addSubview:self.shadowView];
+    
+    [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-self.pickView.frame.size.height, [UIScreen mainScreen].bounds.size.width, self.pickView.frame.size.height)];
+    [self.shadowView addSubview:self];
+    
+    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^(void){
+        self.shadowView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+        
     } completion:^(BOOL isFinished){
         
     }];
@@ -517,37 +518,12 @@
 // UIPicker隐藏
 -(void)hidePickerView
 {
-    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^(void){
-        // 去掉阴影，去掉禁用
-        for (UIView *subView in [[self superview] subviews]) {
-            if (subView.tag == 1024) {
-                [subView removeFromSuperview];
-            }else{
-                subView.userInteractionEnabled = YES;
-            }
-        }
-        // UIPickerView隐藏
-        [self setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-        //  navigationItem可用
-        UIViewController *viewController = [self viewController];
-        viewController.navigationItem.leftBarButtonItem.enabled = YES;
-        viewController.navigationItem.rightBarButtonItem.enabled = YES;
-        
+    [self.shadowView setFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    
+    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationCurveEaseOut animations:^(void){
+        self.shadowView.backgroundColor = [UIColor clearColor];
     } completion:^(BOOL isFinished){
-        
+        [self.shadowView removeFromSuperview];
     }];
 }
-
-// 通过UIView查找UIViewController
-- (UIViewController *)viewController {
-    UIResponder *responder = self;
-    while (![responder isKindOfClass:[UIViewController class]]) {
-        responder = [responder nextResponder];
-        if (nil == responder) {
-            break;
-        }
-    }
-    return (UIViewController *)responder;
-}
-
 @end

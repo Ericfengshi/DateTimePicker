@@ -5,8 +5,8 @@ DateTimePicker
 
 What you need
 ---
-* DateTimePickerView.h
-* DateTimePickerView.m
+* [DateTimePickerView.h](https://github.com/Ericfengshi/DateTimePicker/blob/master/DateTimePickerView.h)
+* [DateTimePickerView.m](https://github.com/Ericfengshi/DateTimePicker/blob/master/DateTimePickerView.m)
 
 How to use
 ---  
@@ -24,7 +24,7 @@ How to use
     self.timeDetailTextField.tag = 1;
     [self.view addSubview:self.timeDetailTextField];
     
-    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithSize:CGSizeMake(320, 280) timeType:timeDetail title:@"具体时间"] autorelease];
+    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail] autorelease];
     selectDatePicker1.delegate = self;
     self.datePicker1 = selectDatePicker1;
         
@@ -48,7 +48,7 @@ How to use
         }
         self.timeType = timeDetail;
         [self.datePicker1 viewLoad:self.selectDate];
-        [self.datePicker1 showInView:self.view];
+        [self.datePicker1 showInView];
     }
     return NO;
 }

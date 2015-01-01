@@ -22,6 +22,8 @@ typedef enum {
 
 @interface DateTimePickerView : UIView<UIPickerViewDelegate,UIPickerViewDataSource>
 
+@property (nonatomic,retain) UIWindow *window;
+@property (nonatomic,retain) UIView *shadowView;
 @property (nonatomic,retain) UIView *pickView;
 @property (nonatomic,retain) UIToolbar *toolBar;
 @property (nonatomic,retain) UIPickerView *pickViewList;
@@ -41,7 +43,7 @@ typedef enum {
 
 @property (nonatomic,assign) TimeType timeType;
 
--(id)initWithSize:(CGSize)size timeType:(TimeType)timeType title:(NSString*)title;
+-(id)initWithTitle:(NSString*)title timeType:(TimeType)tType;
 -(void)viewLoad:(NSDate *)date;
-- (void)showInView:(UIView *)view;
+- (void)showInView;
 @end
