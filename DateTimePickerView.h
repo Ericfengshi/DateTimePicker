@@ -43,7 +43,7 @@ typedef enum {
 
 @property (nonatomic,assign) TimeType timeType;
 
--(id)initWithTitle:(NSString*)title timeType:(TimeType)tType;
+-(id)initWithTitle:(NSString*)title timeType:(TimeType)timeType delegate:(id)delagte;
 -(void)viewLoad:(NSDate *)date;
-- (void)showInView;
+-(void)showInView;
 @end

@@ -30,7 +30,6 @@
 
 -(void)dealloc
 {
-    [window release];
     self.shadowView = nil;
     self.pickView = nil;
     self.toolBar = nil;
@@ -44,7 +43,7 @@
 	[super dealloc];
 }
 
--(id)initWithTitle:(NSString*)title timeType:(TimeType)tType{
+-(id)initWithTitle:(NSString*)title timeType:(TimeType)timeType delegate:(id)delegate{
     self = [super init];
     if (self)
 	{
@@ -57,7 +56,8 @@
 
         self.shadowView = [[[UIView alloc] init] autorelease];
         
-        self.timeType = tType;
+        self.delegate = delegate;
+        self.timeType = timeType;
         self.pickView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,216+44)] autorelease];
 		self.pickView.backgroundColor = [UIColor underPageBackgroundColor];
         

@@ -67,8 +67,7 @@
     self.timeDetailTextField.tag = 1;
     [self.view addSubview:self.timeDetailTextField];
     
-    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail] autorelease];
-    selectDatePicker1.delegate = self;
+    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail delegate:self] autorelease];
     self.datePicker1 = selectDatePicker1;
     
     self.timeChineseTextField = [[[UITextField alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/4, 50, [UIScreen mainScreen].bounds.size.width/2, 30)] autorelease];
@@ -78,8 +77,7 @@
     self.timeChineseTextField.tag = 2;
     [self.view addSubview:self.timeChineseTextField];
     
-    DateTimePickerView *selectDatePicker2 = [[[DateTimePickerView alloc] initWithTitle:@"今天，明天，后天" timeType:timeChinese] autorelease];
-    selectDatePicker2.delegate = self;
+    DateTimePickerView *selectDatePicker2 = [[[DateTimePickerView alloc] initWithTitle:@"今天，明天，后天" timeType:timeChinese delegate:self] autorelease];
     self.datePicker2 = selectDatePicker2;
 
     self.dateDetailTextField = [[[UITextField alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/4, 90, [UIScreen mainScreen].bounds.size.width/2, 30)] autorelease];
@@ -89,8 +87,7 @@
     self.dateDetailTextField.tag = 3;
     [self.view addSubview:self.dateDetailTextField];
     
-    DateTimePickerView *selectDatePicker3 = [[[DateTimePickerView alloc] initWithTitle:@"日期选择" timeType:dateDetail] autorelease];
-    selectDatePicker3.delegate = self;
+    DateTimePickerView *selectDatePicker3 = [[[DateTimePickerView alloc] initWithTitle:@"日期选择" timeType:dateDetail delegate:self] autorelease];
     self.datePicker3 = selectDatePicker3;
     
     self.selectDate = [NSDate date];

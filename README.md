@@ -24,8 +24,7 @@ How to use
     self.timeDetailTextField.tag = 1;
     [self.view addSubview:self.timeDetailTextField];
     
-    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail] autorelease];
-    selectDatePicker1.delegate = self;
+    DateTimePickerView *selectDatePicker1 = [[[DateTimePickerView alloc] initWithTitle:@"具体时间" timeType:timeDetail delegate:self] autorelease];
     self.datePicker1 = selectDatePicker1;
         
     self.selectDate = [NSDate date];
