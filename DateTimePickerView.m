@@ -112,8 +112,6 @@
         [self.minutesArray addObject:[NSString stringWithFormat:@"%02d分",i]];
     }
     
-    
-    
     if (self.timeType==timeDetail) {//timeDetail
         // Get Current Year
         [formatter setDateFormat:@"yyyy"];
@@ -154,6 +152,8 @@
         [self.pickViewList selectRow:[self.daysArray indexOfObject:currentDateString] inComponent:2 animated:YES];
         [self.pickViewList selectRow:[self.hoursArray indexOfObject:currentHourString] inComponent:3 animated:YES];
         [self.pickViewList selectRow:[self.minutesArray indexOfObject:currentMinutesString] inComponent:4 animated:YES];
+        self.selectedMonthRow = [self.monthArray indexOfObject:currentMonthString];
+        [self.pickViewList reloadComponent:2];
     }else if(self.timeType==timeChinese){//timeChinese
         
         // PickerView -  Days data
@@ -218,8 +218,9 @@
         [self.pickViewList selectRow:[self.yearArray indexOfObject:currentYearString] inComponent:0 animated:YES];
         [self.pickViewList selectRow:[self.monthArray indexOfObject:currentMonthString] inComponent:1 animated:YES];
         [self.pickViewList selectRow:[self.daysArray indexOfObject:currentDateString] inComponent:2 animated:YES];
+        self.selectedMonthRow = [self.monthArray indexOfObject:currentMonthString];
+        [self.pickViewList reloadComponent:2];
     }
-    
 }
 
 #pragma mark - 
@@ -471,22 +472,33 @@
 -(void)actionDone
 {
     if (self.timeType == timeDetail) {//timeDetail
-        [self.delegate selectDate:[NSString stringWithFormat:@"%@%@%@ %@%@",[self.yearArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]],[self.monthArray objectAtIndex:[self.pickViewList selectedRowInComponent:1]],[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:2]],[self.hoursArray objectAtIndex:[self.pickViewList selectedRowInComponent:3]],[self.minutesArray objectAtIndex:[self.pickViewList selectedRowInComponent:4]]]];
+        NSString *result = [NSString stringWithFormat:@"%@%@%@ %@%@",[self.yearArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]],[self.monthArray objectAtIndex:[self.pickViewList selectedRowInComponent:1]],[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:2]],[self.hoursArray objectAtIndex:[self.pickViewList selectedRowInComponent:3]],[self.minutesArray objectAtIndex:[self.pickViewList selectedRowInComponent:4]]];
+        NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+        [formatter setDateFormat:@"yyyy年MM月dd日 HH时mm分"];
+        NSDate *date = [formatter dateFromString:result];
+        if (date) {
+            [self.delegate selectDate:result];
+        }
     }else if(self.timeType == timeChinese){//timeChinese
         NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
         [formatter setDateFormat:@"yyyy年MM月dd日"];
-        NSDate *todayDate=[formatter dateFromString:[formatter stringFromDate:[NSDate date]]];
+        NSDate *todayDate =[formatter dateFromString:[formatter stringFromDate:[NSDate date]]];
         NSTimeInterval secondsPerDay = 24 * 60 * 60;
         if ([[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]] isEqual:@"明天"]) {
-            todayDate=[NSDate dateWithTimeInterval:secondsPerDay sinceDate:todayDate];
+            todayDate = [NSDate dateWithTimeInterval:secondsPerDay sinceDate:todayDate];
         }else if ([[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]] isEqual:@"后天"]) {
-            todayDate=[NSDate dateWithTimeInterval:secondsPerDay*2 sinceDate:todayDate];
+            todayDate = [NSDate dateWithTimeInterval:secondsPerDay*2 sinceDate:todayDate];
         }
-        
         [self.delegate selectDate:[NSString stringWithFormat:@"%@ %@%@",[formatter stringFromDate:todayDate],[self.hoursArray objectAtIndex:[self.pickViewList selectedRowInComponent:1]],[self.minutesArray objectAtIndex:[self.pickViewList selectedRowInComponent:2]]]];
 
     }else{
-        [self.delegate selectDate:[NSString stringWithFormat:@"%@%@%@",[self.yearArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]],[self.monthArray objectAtIndex:[self.pickViewList selectedRowInComponent:1]],[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:2]]]];
+        NSString *result = [NSString stringWithFormat:@"%@%@%@",[self.yearArray objectAtIndex:[self.pickViewList selectedRowInComponent:0]],[self.monthArray objectAtIndex:[self.pickViewList selectedRowInComponent:1]],[self.daysArray objectAtIndex:[self.pickViewList selectedRowInComponent:2]]];
+        NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+        [formatter setDateFormat:@"yyyy年MM月dd日"];
+        NSDate *date = [formatter dateFromString:result];
+        if (date) {
+            [self.delegate selectDate:result];
+        }
     }
     [self hidePickerView];
 }
